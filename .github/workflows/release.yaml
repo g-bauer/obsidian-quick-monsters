@@ -2,8 +2,7 @@ name: build
 
 on:
   push:
-    tags:
-      - "*"
+    tags: ["v*"]
 
 env:
   PLUGIN_NAME: obsidian-quick-monsters
