@@ -1,0 +1,10 @@
+{
+	"id": "quick-monsters-5e",
+	"name": "Quick Monsters 5e",
+	"version": "0.1.0",
+	"minAppVersion": "0.9.12",
+	"description": "Build Simple Monster Stat Blocks from Challenge Rating.",
+	"author": "g-bauer",
+	"authorUrl": "https://github.com/g-bauer",
+	"isDesktopOnly": false
+}
