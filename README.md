@@ -16,7 +16,7 @@ In your note, use
 
 which will render as
 
-<img src="./img/goblin.png">
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/goblin.png">
 
 The same result can be achieved via
 
@@ -37,7 +37,7 @@ The input must be a YAML array. You can add multiple monster like so:
 ```
 ````
 
-<img src="./img/multiple_monsters.png">
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/multiple_monsters.PNG">
 
 ### Options
 
@@ -58,7 +58,7 @@ For example, using
 
 yields
 
-<img src="./img/kyr.png">
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/kyr.PNG">
 
 The total damage is split into two "attacks" and instead of the default 6-sided die, 8-sided dice are used.
 
@@ -84,7 +84,7 @@ You can use them directly at the table and improvise attacks and spells or as a 
 
 Consider this stat block:
 
-<img src="./img/ythanar.png">
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/ythanar.PNG">
 
 We can use these statistics and improvise this creature's attacks (may be we make some notes below the block):
 
