@@ -17,5 +17,5 @@
       "es2015"
     ]
   },
-  "include": ["src/*"]
+  "include": ["**/*.ts"]
 }

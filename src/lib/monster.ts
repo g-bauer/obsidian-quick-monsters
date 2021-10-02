@@ -1,5 +1,3 @@
-import { timeStamp } from "console";
-
 const specialCrs = new Set([0, "0", "1/8", "1/4", "1/2"]);
 type specialCr = typeof specialCrs[];
 
@@ -15,8 +13,9 @@ export class QuickMonster {
     dc: number;
     damageDice: number;
     multiAttack: number;
+    amount: number;
 
-    constructor(name: string, cr: string | number, damageDice?: number, multiAttack?: number) {
+    constructor(name: string, cr: string | number, damageDice?: number, multiAttack?: number, amount?: number) {
         this.name = name;
         this.cr = cr;
 
@@ -55,6 +54,7 @@ export class QuickMonster {
 
         this.multiAttack = multiAttack ?? 1;
         this.damageDice = damageDice ?? 6;
+        this.amount = amount ?? 1;
     }
 
     damageToDiceCode(): string {
@@ -70,8 +70,8 @@ export class QuickMonster {
         const staticResult = rem === 0 ? '' : `${Math.abs(rem)}`;
         const sign = diceResult === '' || staticResult === '' ? '' : '+';
         const maString = this.multiAttack === 1 ? '' : `Multiattack(${this.multiAttack}), each `;
-        return `${maString} ${Math.round(
+        return `${maString} <em>${Math.round(
             damagePerAttack
-        )} (${diceResult}${sign}${staticResult})`;
+        )}</em> (${diceResult}${sign}${staticResult})`;
     }
 }

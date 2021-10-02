@@ -1,47 +1,58 @@
 <script lang="ts">
   import type { QuickMonster } from '../lib/monster';
+  import { icons } from '../lib/icons';
 
   export let monsters: QuickMonster[];
+  export let displayType: string;
 </script>
 
 <div class="container">
-  {#each monsters as monster}
-    <div class="monster">
-      <h4>{monster.name} (CR {monster.cr})</h4>
-      <ul class="monster-stats">
-        <li>
-          <span>
-            <strong>DEFENSIVE</strong> |
-            <b>HP:</b>
-            {monster.hp} | <b>AC:</b>
-            {monster.ac} | <b>Best Save:</b>
-            {monster.save}
-          </span>
-        </li>
-        <li>
-          <span>
-            <strong>OFFENSIVE</strong> |
-            <b>Hit:</b>
-            {monster.toHit} |
-            <b>Damage:</b>
-            {monster.damageToDiceCode()} |
-            <b>DC:</b>
-            {monster.dc}
-          </span>
-        </li>
-      </ul>
-      <hr />
-    </div>
-  {/each}
+  {#if displayType === "list"}
+    {#each monsters as monster}
+      <div class="monster">
+        <span>
+          <strong>{monster.amount}x {monster.name} (CR {monster.cr})</strong>
+          {@html icons['health']}
+          {monster.hp}
+          {@html icons['shield']}
+          {monster.ac}
+          {@html icons['aura']}
+          {monster.save}
+          {@html icons['targeted']}
+          {monster.toHit}
+          {@html icons['bowie-knife']}
+          {@html monster.damageToDiceCode()}
+          {@html icons['burning-embers']}
+          {monster.dc}
+        </span>
+      </div>
+    {/each}
+  {:else}
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>{@html icons['health']}</th>
+        <th>{@html icons['shield']}</th>
+        <th>{@html icons['aura']}</th>
+        <th>{@html icons['targeted']}</th>
+        <th>{@html icons['bowie-knife']}</th>
+        <th>{@html icons['burning-embers']}</th>
+        <th>CR</th>
+        <th>#</th>
+      </tr>
+      {#each monsters as monster}
+        <tr>
+          <td><strong>{monster.name}</strong></td>
+          <td>{monster.hp}</td>
+          <td>{monster.ac}</td>
+          <td>{monster.save}</td>
+          <td>{monster.toHit}</td>
+          <td>{@html monster.damageToDiceCode()}</td>
+          <td>{monster.dc}</td>
+          <td>{monster.cr}</td>
+          <td>{monster.amount}</td>
+        </tr>
+      {/each}
+    </table>
+  {/if}
 </div>
-
-<style>
-  .monster {
-    margin-top: -5px;
-    margin-bottom: 1px;
-  }
-  .monster-stats {
-    margin-top: -10px;
-    margin-bottom: -10px;
-  }
-</style>
