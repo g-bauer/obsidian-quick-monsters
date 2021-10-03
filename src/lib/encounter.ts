@@ -70,78 +70,47 @@ const tresholds: BudgetDict = {
     20: { easy: 2800, medium: 5700, hard: 8500, deadly: 12700 }
 }
 
-export class Encounter {
-    monsters: QuickMonster[] = [];
-    levels: number[] = [];
+function xpBudget(characterLevels: number[]): XpBudget {
+    const easy = characterLevels.reduce((acc, lvl) => acc + tresholds[lvl].easy, 0);
+    const medium = characterLevels.reduce((acc, lvl) => acc + tresholds[lvl].medium, 0);
+    const hard = characterLevels.reduce((acc, lvl) => acc + tresholds[lvl].hard, 0);
+    const deadly = characterLevels.reduce((acc, lvl) => acc + tresholds[lvl].deadly, 0);
+    return { easy: easy, medium: medium, hard: hard, deadly: deadly }
+}
 
-    constructor(monsters: QuickMonster[], levels: number[]) {
-        this.monsters = monsters;
-        this.levels = levels;
+export function encounterDifficulty(characterLevels: number[], monsters: QuickMonster[]): DifficultyReport {
+    const numberOfMonsters = monsters.reduce((acc, monster) => acc + monster.amount, 0);
+    const xp: number = monsters.reduce((acc, monster) => acc + monster.amount * crToXp[monster.cr], 0);
+    let numberMultiplier: number;
+    if (numberOfMonsters === 1) {
+        numberMultiplier = 1;
+    } else if (numberOfMonsters === 2) {
+        numberMultiplier = 1.5;
+    } else if (numberOfMonsters < 7) {
+        numberMultiplier = 2.0;
+    } else if (numberOfMonsters < 11) {
+        numberMultiplier = 2.5;
+    } else if (numberOfMonsters < 15) {
+        numberMultiplier = 3.0;
+    } else {
+        numberMultiplier = 4.0;
     }
-
-    xpBudget(): XpBudget {
-        const easy = this.levels.reduce((acc, lvl) => acc + tresholds[lvl].easy, 0);
-        const medium = this.levels.reduce((acc, lvl) => acc + tresholds[lvl].medium, 0);
-        const hard = this.levels.reduce((acc, lvl) => acc + tresholds[lvl].hard, 0);
-        const deadly = this.levels.reduce((acc, lvl) => acc + tresholds[lvl].deadly, 0);
-        return { easy: easy, medium: medium, hard: hard, deadly: deadly }
+    const adjustedXp = numberMultiplier * xp;
+    const budget = xpBudget(characterLevels);
+    let difficulty = 'easy';
+    if (adjustedXp >= budget.deadly) {
+        difficulty = 'deadly';
+    } else if (adjustedXp >= budget.hard) {
+        difficulty = 'hard';
+    } else if (adjustedXp > budget.medium) {
+        difficulty = 'medium'
+    };
+    let result = {
+        difficulty: difficulty,
+        totalXp: xp,
+        adjustedXp: adjustedXp,
+        multiplier: numberMultiplier,
+        budget: budget
     }
-
-    difficulty(): DifficultyReport {
-        const numberOfMonsters = this.monsters.reduce((acc, monster) => acc + monster.amount, 0);
-        const xp: number = this.monsters.reduce((acc, monster) => acc + monster.amount * crToXp[monster.cr], 0);
-        let numberMultiplier: number;
-        if (numberOfMonsters === 1) {
-            numberMultiplier = 1;
-        } else if (numberOfMonsters === 2) {
-            numberMultiplier = 1.5;
-        } else if (numberOfMonsters < 7) {
-            numberMultiplier = 2.0;
-        } else if (numberOfMonsters < 11) {
-            numberMultiplier = 2.5;
-        } else if (numberOfMonsters < 15) {
-            numberMultiplier = 3.0;
-        } else {
-            numberMultiplier = 4.0;
-        }
-        const adjustedXp = numberMultiplier * xp;
-        const budget = this.xpBudget();
-        let difficulty = 'easy';
-        if (adjustedXp >= budget.deadly) {
-            difficulty = 'deadly';
-        } else if (adjustedXp >= budget.hard) {
-            difficulty = 'hard';
-        } else if (adjustedXp > budget.medium) {
-            difficulty = 'medium'
-        };
-        let result = {
-            difficulty: difficulty,
-            totalXp: xp,
-            adjustedXp: adjustedXp,
-            multiplier: numberMultiplier,
-            budget: budget
-        }
-        return result;
-    }
-
-    lazyBenchmark(): string {
-        const monsterCr = this.monsters.reduce((acc, monster) => {
-            let cr: number | string = monster.cr;
-            if (cr === "1/8") {
-                cr = 1 / 8;
-            } else if (cr === "1/4") {
-                cr = 1 / 4;
-            } else if (cr === "1/2") {
-                cr = 1 / 2;
-            } else if (typeof cr === "string") {
-                cr = Number.parseInt(cr);
-            }
-            return acc + monster.amount * cr
-        }, 0);
-        const sumLevel = this.levels.reduce((acc, lvl) => acc + lvl, 0);
-        const maxLevel = Math.max(...this.levels);
-        const f = maxLevel <= 4 ? 1 / 4 : 1 / 2;
-        const difficulty = monsterCr > sumLevel * f ? 'might be deadly' : 'is not deadly';
-        return `You encounter ${difficulty}!`
-    }
+    return result;
 }

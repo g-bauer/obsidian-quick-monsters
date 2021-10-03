@@ -1,15 +1,14 @@
 <script lang="ts">
   import type { QuickMonster } from 'src/lib/monster';
-  import { Encounter } from 'src/lib/encounter';
   import type { DifficultyReport } from 'src/lib/encounter';
+  import { encounterDifficulty } from 'src/lib/encounter';
   import Monster from './Monster.svelte';
 
   export let monsters: QuickMonster[];
   export let levels: number[];
   export let displayType: string;
   export let displayBudget: boolean;
-  const encounter: Encounter = new Encounter(monsters, levels);
-  const difficulty: DifficultyReport = encounter.difficulty();
+  const difficulty: DifficultyReport = encounterDifficulty(levels, monsters);
 </script>
 
 <div class="container">
