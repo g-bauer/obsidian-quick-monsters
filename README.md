@@ -20,6 +20,17 @@ which will render as
 
 <img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/goblin.png">
 
+The stats shown are:
+- Name
+- Hit Points (HP)
+- Armor Class (AC)
+- Best Saving Throw
+- To Hit Bonus
+- Damage
+- DC (of any ability or spell)
+- CR (Challenge Rating)
+- Number of monsters (important for `quick-encounter`)
+
 The same result can be achieved via
 
 ````yaml

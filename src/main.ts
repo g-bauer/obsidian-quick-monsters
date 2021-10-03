@@ -9,7 +9,7 @@ interface QuickMonstersSetting {
 }
 
 const DefaultSetting: QuickMonstersSetting = {
-	displayType: "list",
+	displayType: "table",
 	displayBudget: true
 }
 
