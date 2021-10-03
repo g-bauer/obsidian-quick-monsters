@@ -3,20 +3,12 @@
     import type { DifficultyReport } from "src/lib/encounter";
     import { encounterDifficulty } from "src/lib/encounter";
     import Monster from "./Monster.svelte";
+    import { icons } from '../lib/icons';
 
     import { createEventDispatcher } from "svelte";
     import { ExtraButtonComponent } from "obsidian";
 
     const dispatch = createEventDispatcher();
-
-    const open = (node: HTMLElement) => {
-        new ExtraButtonComponent(node)
-            .setIcon("crossed-swords")
-            .setTooltip("Begin Encounter")
-            .onClick(() => {
-                dispatch("begin-encounter");
-            });
-    };
 
     export let monsters: QuickMonster[];
     export let levels: number[];
@@ -28,6 +20,10 @@
 
 <div class="container">
     <p>
+        {#if tracker}
+            <button on:click="{() => dispatch("begin-encounter")}"><strong>{@html icons['crossed-swords']} Run Encounter</strong></button>
+            <br />
+        {/if}
         <strong> Difficulty: </strong>
         <em>{difficulty.difficulty.toUpperCase()}</em>
         {#if displayBudget}
@@ -44,15 +40,6 @@
             {difficulty.budget.hard} | <em>Deadly:</em>
             {difficulty.budget.deadly}
         {/if}
-        {#if tracker}
-            <div class="open-tracker" use:open />
-        {/if}
         <Monster {monsters} {displayType} />
     </p>
 </div>
-
-<style>
-    .open-tracker {
-        width: fit-content;
-    }
-</style>

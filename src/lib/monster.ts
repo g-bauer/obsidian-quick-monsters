@@ -14,8 +14,9 @@ export class QuickMonster {
     damageDice: number;
     multiAttack: number;
     amount: number;
+    modifier: number;
 
-    constructor(name: string, cr: string | number, damageDice?: number, multiAttack?: number, amount?: number) {
+    constructor(name: string, cr: string | number, damageDice?: number, multiAttack?: number, amount?: number, ini?: number) {
         this.name = name;
         this.cr = cr;
 
@@ -55,6 +56,8 @@ export class QuickMonster {
         this.multiAttack = multiAttack ?? 1;
         this.damageDice = damageDice ?? 6;
         this.amount = amount ?? 1;
+        // initiative modifier for combat tracker
+        this.modifier = ini ?? 0;
     }
 
     damageToDiceCode(): string {
