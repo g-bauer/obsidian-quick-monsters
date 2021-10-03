@@ -1,10 +1,12 @@
 # Create Monster Stat Blocks Quickly - for Obsidian.md
 
-This plugin can be used to create simplified stat blocks for 5e monsters given their challenge rating (CR).
+This plugin can be used to create simplified stat blocks for 5e monsters given their challenge rating (CR) and compute encounter difficulties.
 
 The created statistics are based on the analysis of published 5e monsters done by Paul Hughes. Please, read the original post on his blog "Blog of Holding" titled **["5e monster manual on a business card"](http://blogofholding.com/?p=7338)**.
 
 ## Usage in Obsidian
+
+### `quick-monster`
 
 In your note, use
 
@@ -39,11 +41,42 @@ The input must be a YAML array. You can add multiple monster like so:
 
 <img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/multiple_monsters.PNG">
 
+### `quick-encounter`
+
+You can turn the list of monsters into an encounter by changing `quick-monster` to `quick-encounter` and adding a line with your character's levels.
+Let's add more Goblins (setting `amount: 4`)  and see how difficult that encounter would be for our group of three level 3 adventures.
+
+````yaml
+```quick-encounter
+- levels: [3, 3, 3]
+- { name: Goblin, cr: 1/4, amount: 4 }
+- { name: Goblin Boss, cr: 1/2 }
+- { name: Dire Wolf, cr: 1 }
+```
+````
+This yields:
+
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/encounter.PNG">
+
+A neat way to organize encounters is by putting them into a foldable section e.g. using the excellent [obsidian-admonition plugin](https://github.com/valentine195/obsidian-admonition):
+
+````ad-encounter
+```quick-encounter
+- levels: [3, 3, 3]
+- { name: Goblin, cr: 1/4, amount: 4 }
+- { name: Goblin Boss, cr: 1/2 }
+- { name: Dire Wolf, cr: 1 }
+```
+````
+
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/encounter-ad.PNG">
+
 ### Options
 
 You can add additional information:
 - `damageDice` defines which dice are shown for damage, and
 - `multiAttack` can be used to split damage into multiple attacks.
+- `amount`can be used to add multiple monsters to an encounter.
 
 For example, using
 
