@@ -60,7 +60,7 @@ export class QuickMonster {
         this.modifier = ini ?? 0;
     }
 
-    damageToDiceCode(): string {
+    damageToDiceCode(): { readable: string, diceCode: string } {
         const damagePerAttack = this.damage / this.multiAttack;
         const diceMean = 0.5 * (this.damageDice + 1);
         let numberOfDice = Math.round(damagePerAttack / diceMean);
@@ -73,8 +73,12 @@ export class QuickMonster {
         const staticResult = rem === 0 ? '' : `${Math.abs(rem)}`;
         const sign = diceResult === '' || staticResult === '' ? '' : '+';
         const maString = this.multiAttack === 1 ? '' : `Multiattack(${this.multiAttack}), each `;
-        return `${maString} <em>${Math.round(
+        const readable = `${maString} <em>${Math.round(
             damagePerAttack
         )}</em> (${diceResult}${sign}${staticResult})`;
+        return {
+            readable: readable,
+            diceCode: `${diceResult}${sign}${staticResult}`
+        }
     }
 }

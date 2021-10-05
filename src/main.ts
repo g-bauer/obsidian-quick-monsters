@@ -10,6 +10,8 @@ import {
 import { QuickMonster } from "./lib/monster";
 import Monster from "./svelte/Monster.svelte";
 import Encounter from "./svelte/Encounter.svelte";
+import { run } from "svelte/internal";
+import { removeAllListeners } from "process";
 
 interface QuickMonstersSetting {
     displayType: "table" | "list";
@@ -25,7 +27,13 @@ declare module "obsidian" {
     interface App {
         plugins: {
             isEnabled(name: string): boolean;
+            plugins: {
+                "obsidian-dice-roller": {
+                    parseDice(text: string): Promise<{ result: number }>;
+                };
+            }
         };
+
     }
     interface Workspace {
         on(
@@ -46,7 +54,11 @@ export default class QuickMonsters extends Plugin {
     settings: QuickMonstersSetting;
 
     get trackerEnabled() {
-        return this.app.plugins.isEnabled("initiative-tracker");
+        return "initiative-tracker" in this.app.plugins.plugins;
+    }
+
+    get canUseDiceRoller() {
+        return "obsidian-dice-roller" in this.app.plugins.plugins;
     }
 
     async onload() {
@@ -73,7 +85,7 @@ export default class QuickMonsters extends Plugin {
                         target: div1,
                         props: {
                             monsters: monsters,
-                            displayType: this.settings.displayType
+                            displayType: this.settings.displayType,
                         }
                     });
                 } catch (e) {
@@ -121,15 +133,17 @@ export default class QuickMonsters extends Plugin {
                         monsters: monsters,
                         levels: playerLevels[0],
                         displayType: this.settings.displayType,
-                        displayBudget: this.settings.displayBudget
+                        displayBudget: this.settings.displayBudget,
                     }
                 });
 
                 /** Add begin encounter hook from Svelte Component */
                 svelteComponent.$on("begin-encounter", () => {
+                    let ms: any = [];
+                    monsters.forEach((m) => {ms.push(Array(m.amount).fill(m))});
                     this.app.workspace.trigger(
                         "initiative-tracker:start-encounter",
-                        monsters
+                        ms.flat()
                     );
                 });
             }
