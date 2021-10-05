@@ -70,33 +70,6 @@ export default class QuickMonsters extends Plugin {
         this.registerMarkdownCodeBlockProcessor(
             "quick-monster",
             (src, el, ctx) => {
-                const div1 = el.createDiv("monster-div");
-                const data = parseYaml(src);
-                try {
-                    const monsters = data.map((m: any) => {
-                        return new QuickMonster(
-                            m.name,
-                            m.cr,
-                            m.damageDice,
-                            m.multiAttack
-                        );
-                    });
-                    const svelteComponent = new Monster({
-                        target: div1,
-                        props: {
-                            monsters: monsters,
-                            displayType: this.settings.displayType,
-                        }
-                    });
-                } catch (e) {
-                    new Notice(e);
-                }
-            }
-        );
-
-        this.registerMarkdownCodeBlockProcessor(
-            "quick-encounter",
-            (src, el, ctx) => {
                 const div1 = el.createDiv("encounter-div");
                 const data = parseYaml(src);
                 let playerLevels: any = [];
@@ -121,31 +94,35 @@ export default class QuickMonsters extends Plugin {
                 } catch (e) {
                     new Notice(e);
                 }
-                if (playerLevels.length !== 1) {
-                    new Notice(
-                        "Please define a single entry for character levels. E.g. 'levels: [2, 2]' if your group consists of two level 2 characters."
-                    );
-                }
-                const svelteComponent = new Encounter({
-                    target: div1,
-                    props: {
-                        tracker: this.trackerEnabled,
-                        monsters: monsters,
-                        levels: playerLevels[0],
-                        displayType: this.settings.displayType,
-                        displayBudget: this.settings.displayBudget,
-                    }
-                });
-
-                /** Add begin encounter hook from Svelte Component */
-                svelteComponent.$on("begin-encounter", () => {
-                    let ms: any = [];
-                    monsters.forEach((m) => {ms.push(Array(m.amount).fill(m))});
-                    this.app.workspace.trigger(
-                        "initiative-tracker:start-encounter",
-                        ms.flat()
-                    );
-                });
+                if (!playerLevels.flat().length) {
+                    const svelteComponent = new Monster({
+                        target: div1,
+                        props: {
+                            monsters: monsters,
+                            displayType: this.settings.displayType,
+                        }
+                    });
+                } else {
+                    const svelteComponent = new Encounter({
+                        target: div1,
+                        props: {
+                            tracker: this.trackerEnabled,
+                            monsters: monsters,
+                            levels: playerLevels.flat(),
+                            displayType: this.settings.displayType,
+                            displayBudget: this.settings.displayBudget,
+                        }
+                    });
+                    /** Add begin encounter hook from Svelte Component */
+                    svelteComponent.$on("begin-encounter", () => {
+                        let ms: any = [];
+                        monsters.forEach((m) => { ms.push(Array(m.amount).fill(m)) });
+                        this.app.workspace.trigger(
+                            "initiative-tracker:start-encounter",
+                            ms.flat()
+                        );
+                    });
+                };
             }
         );
     }
