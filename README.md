@@ -79,7 +79,7 @@ If you hover over the difficulty, you'll see a breakdown of the difficulty thres
 
 If you have the [obsidian-initiative-tracker](https://github.com/valentine195/obsidian-initiative-tracker) plugin installed and enabled in the settings, instead of adding `levels` to your encounter, the players that are registered within the initiative-tracker settings will be used. You can start the encounter by clicking on the button.
 
-<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/initiative-tracker-integration.PNG">
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/initiative-tracker-integration.png">
 
 ### Options
 
