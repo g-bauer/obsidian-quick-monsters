@@ -25,7 +25,7 @@ which will render as
 The stats shown are:
 - Name
 - Hit Points (HP)
-- Armor Class (AC)
+- Armor Class (AC)git 
 - Best Saving Throw
 - To Hit Bonus
 - Damage
@@ -60,7 +60,7 @@ You can turn the list of monsters into an encounter by adding a line with your c
 Let's add more Goblins (setting `amount: 4`)  and see how difficult that encounter would be for our group of three level 3 adventures.
 
 ````yaml
-```quick-monster
+```quick-encounter
 - levels: [3, 3, 3]
 - { name: Goblin, cr: 1/4, amount: 4 }
 - { name: Goblin Boss, cr: 1/2 }
@@ -71,25 +71,15 @@ This yields:
 
 <img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/encounter.PNG">
 
-A neat way to organize encounters is by putting them into a foldable section e.g. using the excellent [obsidian-admonition plugin](https://github.com/valentine195/obsidian-admonition):
+If you hover over the difficulty, you'll see a breakdown of the difficulty threshold.
 
-````ad-encounter
-```quick-monster
-- levels: [3, 3, 3]
-- { name: Goblin, cr: 1/4, amount: 4 }
-- { name: Goblin Boss, cr: 1/2 }
-- { name: Dire Wolf, cr: 1 }
-```
-````
-
-<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/encounter-ad.PNG">
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/encounter-tooltip.PNG">
 
 ### Running an encounter with the `initiative-tracker` plugin
 
-If you have the [obsidian-initiative-tracker](https://github.com/valentine195/obsidian-initiative-tracker) plugin installed and activated, 
-there will be a button that you can use to start an encounter.
+If you have the [obsidian-initiative-tracker](https://github.com/valentine195/obsidian-initiative-tracker) plugin installed and enabled in the settings, instead of adding `levels` to your encounter, the players that are registered within the initiative-tracker settings will be used. You can start the encounter by clicking on the button.
 
-<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/initiative-tracker.PNG">
+<img src="https://github.com/g-bauer/obsidian-quick-monsters/blob/main/img/initiative-tracker-integration.PNG">
 
 ### Options
 
@@ -115,21 +105,6 @@ yields
 
 The total damage is split into two "attacks" and instead of the default 6-sided die, 8-sided dice are used.
 
-
-### Statistics
-
-The statistics shown are:
-
-- **Name** and **CR** (your input)
-- **HP**: monster hit points
-- **AC**: monster armor class
-- **Best Save**: bonus to the saving throw the monster is most proficient in (informed by your monster theme)
-- **Hit**: to hit bonus for weapon and spell attacks (yes - only remember one value for all attacks)
-- **Damage**: the damage *per* attack or spell, with the dice formula according to the selected dice (default is a 6-sided die)
-- **DC**: difficulty class for spells or other effects such as attack riders (knock down, etc.)
-
-The statistics are divided into *offensive* and *defensive* values. From my experience, as DMs, we often need only one of these information at a given time: On our turn, we need offensive stats - when our players act, we mostly need defensive stats.
-
 ## The Stats are your Starting Point
 
 These stat blocks should be used as a solid base to come up quickly with your own monsters - **they are not set in stone**.
@@ -142,14 +117,14 @@ Consider this stat block:
 We can use these statistics and improvise this creature's attacks (may be we make some notes below the block):
 
 - **Multiattack**: Ythanar attacks once with his *Claw* and once with his *Tail*:
-  -  *Claw*: 18 (2d8 slashing + 2d8 necrotic) damage
-  -  *Tail*: 18 (4d8) bludgeoning damage. Target must make a Strenght Saving Throw (DC 14) or is knocked prone.
-- **Necrotic Breath** (1 charge): 60 ft cone. 36 (8d8) necrotic damage on a failed Constitution Saving Throw (DC 14), half on a success. When Ythanar drops below 50% HP, he regains 1 charge and can use his reaction to use this ability.
+  -  *Claw*: 18 (2d6 slashing + 3d6 necrotic) damage
+  -  *Tail*: 18 (5d6) bludgeoning damage. Target must make a Strenght Saving Throw (DC 14) or is knocked prone.
+- **Necrotic Breath** (1 charge): 60 ft cone. 36 (6d6 + 15) necrotic damage on a failed Constitution Saving Throw (DC 14), half on a success. When Ythanar drops below 50% HP, he regains 1 charge and can use his reaction to use this ability.
 
 It's easy to run. You only need one type of die to roll damage and all attacks have the same to Hit bonus and the same DC.
-If you can do the math in your head, you can always change the dice from `4d8` to `3d8 + 4` if you prefer a smaller variance.
+If you can do the math in your head, you can always change the dice from `5d6` to `3d6 + 8` if you prefer a smaller variance.
 
-## Adjusting the Statistics
+### Adjusting the Statistics
 
 The author of the formulas (see [here](http://blogofholding.com/?p=7338)) evaluated how much stats spread for each CR and derived some heuristics. Adjustments *should be informed by the concept/type of your monster*.
 

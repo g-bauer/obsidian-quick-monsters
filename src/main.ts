@@ -159,7 +159,7 @@ export default class QuickMonsters extends Plugin {
                     const svelteComponent = new Encounter({
                         target: div1,
                         props: {
-                            tracker: this.canUseInitiativeTracker,
+                            tracker: (this.canUseInitiativeTracker && this.settings.useInitiativeTracker),
                             monsters: monsters,
                             levels: playerLevels.flat(),
                             displayType: this.settings.displayType,
