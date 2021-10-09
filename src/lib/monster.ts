@@ -1,3 +1,5 @@
+import { XP_PER_CR } from "src/lib/constants";
+
 const specialCrs = new Set([0, "0", "1/8", "1/4", "1/2"]);
 type specialCr = typeof specialCrs[];
 
@@ -15,10 +17,12 @@ export class QuickMonster {
     multiAttack: number;
     amount: number;
     modifier: number;
+    xp: number;
 
     constructor(name: string, cr: string | number, damageDice?: number, multiAttack?: number, amount?: number, ini?: number) {
         this.name = name;
         this.cr = cr;
+        this.xp = XP_PER_CR[cr];
 
         if (specialCrs.has(cr)) {
             if (cr === "0" || cr === 0) {

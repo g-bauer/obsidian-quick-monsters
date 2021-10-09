@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { QuickMonster } from "../lib/monster";
-  import { icons } from "../lib/icons";
+  import { ICONS } from "../lib/icons";
 
   export let monsters: QuickMonster[];
   export let displayType: string;
@@ -13,17 +13,17 @@
         <li>
           <span>
             <strong>{monster.amount}x {monster.name} (CR {monster.cr})</strong>
-            {@html icons["health"]}
+            {@html ICONS["health"]}
             {monster.hp}
-            {@html icons["shield"]}
+            {@html ICONS["shield"]}
             {monster.ac}
-            {@html icons["player-thunder-struck"]}
+            {@html ICONS["player-thunder-struck"]}
             {monster.save}
-            {@html icons["archery-target"]}
+            {@html ICONS["archery-target"]}
             {monster.toHit}
-            {@html icons["bowie-knife"]}
+            {@html ICONS["bowie-knife"]}
             {@html monster.damageToDiceCode()}
-            {@html icons["dragon-breath"]}
+            {@html ICONS["dragon-breath"]}
             {monster.dc}
           </span>
         </li>
@@ -33,21 +33,24 @@
     <table>
       <tr>
         <th>Name</th>
-        <th title="Hit Points">{@html icons["health"]}</th>
+        <th aria-label="Hit Points">{@html ICONS["health"]}</th>
         <!-- <th>HP</th> -->
-        <th title="Armor Class">{@html icons["shield"]}</th>
+        <th aria-label="Armor Class">{@html ICONS["shield"]}</th>
         <!-- <th>AC</th> -->
-        <th title="Best Saving Throw">{@html icons["player-thunder-struck"]}</th
+        <th aria-label="Best Saving Throw"
+          >{@html ICONS["player-thunder-struck"]}</th
         >
         <!-- <th>SAVE</th> -->
-        <th title="To Hit Bonus">{@html icons["archery-target"]}</th>
+        <th aria-label="To Hit Bonus">{@html ICONS["archery-target"]}</th>
         <!-- <th>Hit</th> -->
-        <th title="Damage">{@html icons["bowie-knife"]}</th>
+        <th aria-label="Damage">{@html ICONS["bowie-knife"]}</th>
         <!-- <th>Damage</th> -->
-        <th title="DC (Difficulty Class)">{@html icons["dragon-breath"]}</th>
+        <th aria-label="DC (Difficulty Class)"
+          >{@html ICONS["dragon-breath"]}</th
+        >
         <!-- <th>DC</th> -->
-        <th title="Challenge Rating">CR</th>
-        <th title="Number of Monsters">#</th>
+        <th aria-label="Challenge Rating">CR</th>
+        <th aria-label="Number of Monsters">#</th>
       </tr>
       {#each monsters as monster}
         <tr>
