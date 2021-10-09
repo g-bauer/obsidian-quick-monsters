@@ -46,7 +46,6 @@ export function encounterDifficulty(
     let numberMultiplier: number;
     let group = {};
     characterLevels.forEach((level) => { group[level] = group[level] ? group[level] += 1 : 1 });
-    console.log(group);
     if (numberOfMonsters === 1) {
         numberMultiplier = 1;
     } else if (numberOfMonsters === 2) {
