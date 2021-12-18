@@ -147,13 +147,17 @@ The author of the formulas (see [here](http://blogofholding.com/?p=7338)) evalua
 
 # Installation
 
-Currently, you can only use this addon from github.
-
 ## From GitHub
 
-- Download the latest release.
+- Download the file named `obsidian-quick-monsters-version.zip` (not the source, `version` stands for the current release's version) from the latest release.
 - Extract the directory into your plugin directory. You can find this directory in `your-vault/.obsidian/plugins` (where `your-vault` is the name of the directory that acts as you Obsidian vault).
 - Activate the plugin in Obsidian (you might have to restart or reload Obsidian).
-- There are currently no parameters / settings for this plugin.
+
+## Using the BRAT plugin
+
+You can use the [BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin to install this plugin.
+- Simply open the command palette and select the `BRAT: Add a beta plugin for testing`.
+- Paste the URL of this repository: `https://github.com/g-bauer/obsidian-quick-monsters`.
+- You might need to activate the plugin as usual.
 
 > Please note that this code comes without any warranty. I am new to developing plugins for Obsidian. **Please, consider backing up your data** before using this plugin.
